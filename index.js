@@ -15,16 +15,18 @@ let invalidMob = document.getElementById(`invalid-mob`);
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const SPECIAL_CHAR_REGEX = /[!@#$%^&*(),.?":{}|<>~`+=\-[\]\\';_/]/;
 
-let isEmailValid = false;
-let isEmailEmpty = false;
-let isFnameValid = false;
-let isFnameEmpty = false;
-let isLnameValid = false;
-let isLnameEmpty = false;
-let isPassValid = false;
-let isPassEmpty = false;
-let isMobValid = false;
-let isMobileEmpty = false;
+let isEmailValid =  false;
+let isEmailEmpty =  true;
+let isFnameValid =  false;
+let isFnameEmpty =  true;
+let isLnameValid =  false;
+let isLnameEmpty =  true;
+let isPassValid =   false;
+let isPassEmpty =   true;
+let isConfirmPassValid = false;
+let isConfirmPassEmpty = true;
+let isMobValid =    false;
+let isMobileEmpty = true;
 
 emailInput.addEventListener("blur", (e) => {
     let emailText = e.target.value;
@@ -66,8 +68,42 @@ lnameInput.addEventListener(`input`, (e) => {
         invalidLname.style.display = "inline-block";
     }
 });
-passInput.addEventListener(`blur`, (e) => {});
-confirmPassInput.addEventListener(`blur`, (e) => {});
-mobInput.addEventListener(`input`, (e) => {});
+passInput.addEventListener(`input`, (e) => {
+    const passText = e.target.value;
+    const hasNumber = /\d/.test(passText);
+    const hasLowerCase = /[a-z]/.test(passText);
+    const hasUpperCase = /[A-Z]/.test(passText);
+    const hasSpecialChar = SPECIAL_CHAR_REGEX.test(passText);
+    if (
+        hasNumber &&
+        hasSpecialChar &&
+        hasLowerCase &&
+        hasUpperCase &&
+        passText.length < 8
+    ) {
+        isPassValid = true;
+        invalidPass.style.display = 'none';
+    }
+    else {
+        isPassValid = false; 
+        invalidPass.style.display = 'inline-block';
+    }
+});
+confirmPassInput.addEventListener(`blur`, (e) => {
+    const confirmPassText = e.target.value;
+    const compringPass = passInput.value;
+    if (confirmPassText == compringPass)
+    {
+        isConfirmPassValid = true;
+        invalidConfirmPass.style.display = 'none';
+    }
+    else {
+        isConfirmPassValid = false;
+        invalidConfirmPass.style.display = 'inline-block'
+    }
+});
+mobInput.addEventListener(`input`, (e) => {
+    
+});
 
 submitBtn.onclick = function () {};
