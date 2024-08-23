@@ -28,6 +28,8 @@ let isConfirmPassEmpty = true;
 let isMobValid =    false;
 let isMobileEmpty = true;
 
+let user;
+
 emailInput.addEventListener("blur", (e) => {
     let emailText = e.target.value;
     if (EMAIL_REGEX.test(emailText)) {
@@ -103,7 +105,30 @@ confirmPassInput.addEventListener(`blur`, (e) => {
     }
 });
 mobInput.addEventListener(`input`, (e) => {
-    
+    const mobText = e.target.value;
+    const isOnlyDigit = /^\d{10}$/.test(mobText);
+    if (isOnlyDigit) {
+        isMobValid = true;
+        invalidMob.style.display = 'none';
+    }
+    else {
+        isMobValid = false;
+        invalidMob.style.display = 'inline-block';
+    }
 });
+console.log(isEmailValid,isFnameValid,isLnameValid,isConfirmPassValid,isMobValid)
+submitBtn.onclick = function (){
+   if (isEmailValid && isFnameValid && isLnameValid && isConfirmPassValid && isMobValid)
+   {
+        user = {
+            email: emailInput.value,
+            fname: fnameInput.value,
+            lname: lnameInput.value,
+            password: passInput.value,
+            mobileNum: mobInput.value
+        }
+        console.log(user);
+   }
+};
 
-submitBtn.onclick = function () {};
+
