@@ -116,8 +116,8 @@ mobInput.addEventListener(`input`, (e) => {
         invalidMob.style.display = 'inline-block';
     }
 });
-console.log(isEmailValid,isFnameValid,isLnameValid,isConfirmPassValid,isMobValid)
-submitBtn.onclick = function (){
+submitBtn.onclick = function (event){
+    event.preventDefault();
    if (isEmailValid && isFnameValid && isLnameValid && isConfirmPassValid && isMobValid)
    {
         user = {
