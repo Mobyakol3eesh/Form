@@ -4,6 +4,7 @@ let lnameInput = document.getElementById("lname-input");
 let passInput = document.getElementById("pass-input");
 let confirmPassInput = document.getElementById("confirm-pass-input");
 let mobInput = document.getElementById("mob-input");
+let imageInput = document.getElementById("image-input");
 let submitBtn = document.getElementById("submit-btn");
 let invalidEmail = document.getElementById("invalid-email");
 let invalidFname = document.getElementById("invalid-fname");
@@ -11,22 +12,27 @@ let invalidLname = document.getElementById("invalid-lname");
 let invalidPass = document.getElementById("invalid-pass");
 let invalidConfirmPass = document.getElementById("invalid-confirm-pass");
 let invalidMob = document.getElementById(`invalid-mob`);
+let invalidImage = document.getElementById("invalid-image");
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const SPECIAL_CHAR_REGEX = /[!@#$%^&*(),.?":{}|<>~`+=\-[\]\\';_/]/;
 
-let isEmailValid =  false;
-let isEmailEmpty =  true;
-let isFnameValid =  false;
-let isFnameEmpty =  true;
-let isLnameValid =  false;
-let isLnameEmpty =  true;
-let isPassValid =   false;
-let isPassEmpty =   true;
+const validExtensions = ["jpg", "png"];
+
+let isEmailValid = false;
+let isEmailEmpty = true;
+let isFnameValid = false;
+let isFnameEmpty = true;
+let isLnameValid = false;
+let isLnameEmpty = true;
+let isPassValid = false;
+let isPassEmpty = true;
 let isConfirmPassValid = false;
 let isConfirmPassEmpty = true;
-let isMobValid =    false;
+let isMobValid = false;
 let isMobileEmpty = true;
+let isImageValid = false;
+let isImageEmpty = true;
 
 let user;
 
@@ -84,24 +90,21 @@ passInput.addEventListener(`input`, (e) => {
         passText.length < 8
     ) {
         isPassValid = true;
-        invalidPass.style.display = 'none';
-    }
-    else {
-        isPassValid = false; 
-        invalidPass.style.display = 'inline-block';
+        invalidPass.style.display = "none";
+    } else {
+        isPassValid = false;
+        invalidPass.style.display = "inline-block";
     }
 });
 confirmPassInput.addEventListener(`blur`, (e) => {
     const confirmPassText = e.target.value;
     const compringPass = passInput.value;
-    if (confirmPassText == compringPass)
-    {
+    if (confirmPassText == compringPass) {
         isConfirmPassValid = true;
-        invalidConfirmPass.style.display = 'none';
-    }
-    else {
+        invalidConfirmPass.style.display = "none";
+    } else {
         isConfirmPassValid = false;
-        invalidConfirmPass.style.display = 'inline-block'
+        invalidConfirmPass.style.display = "inline-block";
     }
 });
 mobInput.addEventListener(`input`, (e) => {
@@ -109,26 +112,46 @@ mobInput.addEventListener(`input`, (e) => {
     const isOnlyDigit = /^\d{10}$/.test(mobText);
     if (isOnlyDigit) {
         isMobValid = true;
-        invalidMob.style.display = 'none';
-    }
-    else {
+        invalidMob.style.display = "none";
+    } else {
         isMobValid = false;
-        invalidMob.style.display = 'inline-block';
+        invalidMob.style.display = "inline-block";
     }
 });
-submitBtn.onclick = function (event){
+imageInput.addEventListener('input',e => {
+    const file = e.target.files[0];
+    if(file) {
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop().toLowerCase();
+        if (validExtensions.includes(fileExtension)){
+            isImageValid = true;
+            invalidImage.style.display = 'none';
+        }
+        else {
+            isImageValid = false;
+            invalidImage.style.display = 'inline-block';
+        }
+    }
+
+})
+submitBtn.onclick = function (event) {
     event.preventDefault();
-   if (isEmailValid && isFnameValid && isLnameValid && isConfirmPassValid && isMobValid)
-   {
+    if (
+        isEmailValid &&
+        isFnameValid &&
+        isLnameValid &&
+        isConfirmPassValid &&
+        isMobValid &&
+        isImageValid
+    ) {
         user = {
             email: emailInput.value,
             fname: fnameInput.value,
             lname: lnameInput.value,
             password: passInput.value,
-            mobileNum: mobInput.value
-        }
+            mobileNum: mobInput.value,
+            image: imageInput.files[0]
+        };
         console.log(user);
-   }
+    }
 };
-
-
