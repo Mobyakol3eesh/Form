@@ -26,6 +26,16 @@ html {
 .form div label {
     margin-bottom: 12px;
 }
+.form .submit-btn {
+    display: flex;
+    align-items: center;
+    background-color: skyblue;
+    border-width: 2px;
+    border-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+}
 .invalid {
     display: none;
     margin-top: 10px;

@@ -44,12 +44,13 @@ emailInput.addEventListener("blur", (e) => {
     } else {
         isEmailValid = false;
         invalidEmail.style.display = "inline-block";
-        if (emailText.length == 0) {
-            invalidEmail.style.display = "none";
-            isEmailEmpty = true;
-        } else {
-            isEmailEmpty = false;
-        }
+    }
+    if (emailText.length == 0) {
+        invalidEmail.style.display = "none";
+        isEmailValid = false;
+        isEmailEmpty = true;
+    } else {
+        isEmailEmpty = false;
     }
 });
 fnameInput.addEventListener(`input`, (e) => {
@@ -63,6 +64,13 @@ fnameInput.addEventListener(`input`, (e) => {
         isFnameValid = false;
         invalidFname.style.display = "inline-block";
     }
+    if (fnameText == 0) {
+        invalidFname.style.display = "none";
+        isFnameValid = false;
+        isFnameEmpty = true;
+    } else {
+        isFnameEmpty = false;
+    }
 });
 lnameInput.addEventListener(`input`, (e) => {
     const lnameText = e.target.value;
@@ -74,6 +82,13 @@ lnameInput.addEventListener(`input`, (e) => {
     } else {
         isLnameValid = false;
         invalidLname.style.display = "inline-block";
+    }
+    if (lnameText.length == 0) {
+        invalidLname.style.display = "none";
+        isLnameValid = false;
+        isLnameEmpty = true;
+    } else {
+        isLnameEmpty = false;
     }
 });
 passInput.addEventListener(`input`, (e) => {
@@ -94,6 +109,13 @@ passInput.addEventListener(`input`, (e) => {
     } else {
         isPassValid = false;
         invalidPass.style.display = "inline-block";
+    }
+    if (passText.length == 0) {
+        invalidPass.style.display = "none";
+        isPassValid = false;
+        isPassEmpty = true;
+    } else {
+        isPassEmpty = false;
     }
 });
 confirmPassInput.addEventListener(`blur`, (e) => {
@@ -117,25 +139,43 @@ mobInput.addEventListener(`input`, (e) => {
         isMobValid = false;
         invalidMob.style.display = "inline-block";
     }
-});
-imageInput.addEventListener('input',e => {
-    const file = e.target.files[0];
-    if(file) {
-        const fileName = file.name;
-        const fileExtension = fileName.split('.').pop().toLowerCase();
-        if (validExtensions.includes(fileExtension)){
-            isImageValid = true;
-            invalidImage.style.display = 'none';
-        }
-        else {
-            isImageValid = false;
-            invalidImage.style.display = 'inline-block';
-        }
+    if (mobText.length == 0) {
+        invalidMob.style.display = "none";
+        isMobValid = false;
+        isMobileEmpty = true;
+    } else {
+        isMobileEmpty = false;
     }
-
-})
+});
+imageInput.addEventListener("input", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        isImageEmpty = false;
+        const fileName = file.name;
+        const fileExtension = fileName.split(".").pop().toLowerCase();
+        if (validExtensions.includes(fileExtension)) {
+            isImageValid = true;
+            invalidImage.style.display = "none";
+        } else {
+            isImageValid = false;
+            invalidImage.style.display = "inline-block";
+        }
+    } else {
+        isImageEmpty == true;
+    }
+});
 submitBtn.onclick = function (event) {
     event.preventDefault();
+    if (
+        isEmailEmpty ||
+        isFnameEmpty ||
+        isLnameEmpty ||
+        isPassEmpty ||
+        isMobileEmpty ||
+        isImageEmpty
+    ) {
+        return null;
+    }
     if (
         isEmailValid &&
         isFnameValid &&
@@ -150,7 +190,7 @@ submitBtn.onclick = function (event) {
             lname: lnameInput.value,
             password: passInput.value,
             mobileNum: mobInput.value,
-            image: imageInput.files[0]
+            image: imageInput.files[0],
         };
         console.log(user);
     }
