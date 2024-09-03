@@ -174,7 +174,7 @@ submitBtn.onclick = function (event) {
         isMobileEmpty ||
         isImageEmpty
     ) {
-        return null;
+        window.alert("There is an emtpy field");
     }
     if (
         isEmailValid &&
